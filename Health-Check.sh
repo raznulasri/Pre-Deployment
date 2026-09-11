@@ -104,3 +104,5 @@ chown "$TARGET_USER:" "$LOGFILE" 2>/dev/null
 
 echo "--------------------------------------------------" > /dev/tty
 echo "Log saved successfully at: $LOGFILE" > /dev/tty
+
+echo "https://github.com/raznulasri"
