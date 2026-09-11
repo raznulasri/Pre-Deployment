@@ -1,11 +1,15 @@
 #!/bin/bash
 
 # Target the home directory of the user running the script
+# Target the home directory of the user running the script
 TARGET_USER="${SUDO_USER:-$USER}"
 USER_HOME=$(eval echo "~$TARGET_USER")
 
+# Generate a timestamp for unique log filenames
+TIMESTAMP=$(date +"%Y%m%d_%H%M%S")
+
 LOGDIR="$USER_HOME/LogUpgrade"
-LOGFILE="$LOGDIR/logbeforeupgrade.log"
+LOGFILE="$LOGDIR/logbeforeupgrade_${TIMESTAMP}.log"
 
 mkdir -p "$LOGDIR"
 chown -R "$TARGET_USER:" "$LOGDIR" 2>/dev/null
