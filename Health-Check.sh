@@ -5,6 +5,7 @@ LOGDIR="/home/LogUpgrade"
 LOGFILE="$LOGDIR/logbeforeupgrade.log"
 mkdir -p "$LOGDIR"
 
+# Collect system info, display on screen, and save to log file
 {
 echo "====== Hostname & Time ======="
 hostname
@@ -92,6 +93,7 @@ echo -e "\n====== File System Table (/etc/fstab) ======="
 cat /etc/fstab 2>/dev/null
 
 echo -e "\n"
-} > "$LOGFILE" 2>&1
+} 2>&1 | tee "$LOGFILE"
 
-echo "Log generated successfully at: $LOGFILE"
+echo "--------------------------------------------------"
+echo "Log saved successfully at: $LOGFILE"
