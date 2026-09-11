@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Target the home directory of the user running the script
-# Target the home directory of the user running the script
+
 TARGET_USER="${SUDO_USER:-$USER}"
 USER_HOME=$(eval echo "~$TARGET_USER")
 
