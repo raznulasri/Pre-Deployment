@@ -1,11 +1,15 @@
 #!/bin/bash
 
-# Ensure directory creation handled cleanly without errors
-LOGDIR="/home/LogUpgrade"
-LOGFILE="$LOGDIR/logbeforeupgrade.log"
-mkdir -p "$LOGDIR"
+# Target the home directory of the user running the script
+TARGET_USER="${SUDO_USER:-$USER}"
+USER_HOME=$(eval echo "~$TARGET_USER")
 
-# Collect system info, write directly to terminal (/dev/tty) AND save to log file
+LOGDIR="$USER_HOME/LogUpgrade"
+LOGFILE="$LOGDIR/logbeforeupgrade.log"
+
+mkdir -p "$LOGDIR"
+chown -R "$TARGET_USER:" "$LOGDIR" 2>/dev/null
+
 {
 echo "====== Hostname & Time ======="
 hostname
@@ -45,10 +49,10 @@ echo -e "\n====== Open Network Ports (ss -tuln) ======="
 ss -tuln 2>/dev/null
 
 echo -e "\n====== Firewall Rules (iptables / ufw) ======="
-sudo iptables -L -n 2>/dev/null || iptables -L -n 2>/dev/null
+iptables -L -n 2>/dev/null
 if command -v ufw &>/dev/null; then
     echo -e "\n--- UFW Status ---"
-    sudo ufw status 2>/dev/null
+    ufw status 2>/dev/null
 fi
 
 echo -e "\n====== Systemd Failed Services ======="
@@ -67,13 +71,13 @@ echo -e "\n====== Environment Variables ======="
 printenv
 
 echo -e "\n====== Crontab (Root) ======="
-sudo crontab -l 2>/dev/null || crontab -l 2>/dev/null || echo "No crontab for root or permission denied"
+crontab -l 2>/dev/null || echo "No crontab for root or permission denied"
 
 echo -e "\n====== Security Status (SELinux / AppArmor) ======="
 if command -v sestatus &>/dev/null; then
     sestatus
 elif command -v aa-status &>/dev/null; then
-    sudo aa-status 2>/dev/null
+    aa-status 2>/dev/null
 else
     echo "Neither SELinux nor AppArmor status tool found"
 fi
@@ -94,6 +98,9 @@ cat /etc/fstab 2>/dev/null
 
 echo -e "\n"
 } 2>&1 | tee "$LOGFILE" > /dev/tty
+
+# Fix ownership of log file to match the user who executed sudo
+chown "$TARGET_USER:" "$LOGFILE" 2>/dev/null
 
 echo "--------------------------------------------------" > /dev/tty
 echo "Log saved successfully at: $LOGFILE" > /dev/tty
