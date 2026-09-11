@@ -45,3 +45,8 @@ You can run the script directly from GitHub without manually downloading or savi
 ```bash
 curl -fsSL [https://raw.githubusercontent.com/raznulasri/After-Upgrade-Healthcheck/main/Health-Check.sh](https://raw.githubusercontent.com/raznulasri/After-Upgrade-Healthcheck/main/Health-Check.sh) | sudo bash
 ```
+---
+
+Thank you for using this project! Your support is greatly appreciated.
+
+
