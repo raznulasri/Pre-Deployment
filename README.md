@@ -43,7 +43,7 @@ This script gathers comprehensive critical system data, including:
 You can run the script directly from GitHub without manually downloading or saving the file:
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/raznulasri/After-Upgrade-Healthcheck/main/Health-Check.sh | sudo bash
+curl -fsSL https://raw.githubusercontent.com/raznulasri/Pre-Deployment/main/Health-Check.sh | sudo bash
 ```
 ---
 
