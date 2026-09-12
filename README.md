@@ -1,4 +1,4 @@
-# Pre-Upgrade System State Audit Script
+# Pre-Deployment System State Audit Script
 
 This Bash script captures and records the current state of a Linux system (*snapshot/baseline*) before performing any system upgrade or major maintenance. 
 
